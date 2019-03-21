@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e -u -o pipefail
+
+cd /app/ovpn/config/windscribe
+
+if [ -n "$VPNHOST" -a -n "$VPNPORT" ]; then
+  sed -i "s/VPNHOST/$VPNHOST/" client.conf
+  sed -i "s/VPNPORT/$VPNPORT/" client.conf
+  chmod 644 client.conf
+  set -- "$@" '--config' 'client.conf'
+else
+  echo "OpenVPN server and/or port not set. Exiting."
+  exit 1
+fi
+
+if [ -n "$USERNAME" -a -n "$PASSWORD" ]; then
+  echo "$USERNAME" > auth.conf
+  echo "$PASSWORD" >> auth.conf
+  chmod 600 auth.conf
+  set -- "$@" '--auth-user-pass' 'auth.conf'
+else
+  echo "OpenVPN credentials not set. Exiting."
+  exit 1
+fi
+
+openvpn "$@"

@@ -1,0 +1,27 @@
+version: '1'
+services:
+  vpn_proxy:
+    image: trananhtuan/windscribe-openvpn-proxy
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    dns:
+      - 209.222.18.218
+      - 209.222.18.222
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - VPNHOST=hk.windscribe.com
+      - VPNPORT=443
+      - USERNAME=<username>
+      - PASSWORD=<password>
+      - LOCAL_NETWORK=10.1.1.0/24
+    networks:
+      - vpn_proxy
+    ports:
+      - 8118:8118
+    restart: always
+
+networks:
+  vpn_proxy:
