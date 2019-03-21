@@ -1,1 +1,0 @@
-# windscribe-openvpn-proxy
