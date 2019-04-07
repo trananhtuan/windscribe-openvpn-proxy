@@ -13,6 +13,13 @@ else
   exit 1
 fi
 
+# Disable IPv6 if set.
+if [ ! -z ${DISABLE_IPV6+x} ]; then
+  echo 'pull-filter ignore "ifconfig-ipv6 "' >> client.conf
+  echo 'pull-filter ignore "route-ipv6 "' >> client.conf
+  sed -i "s/proto udp$/proto udp4/" client.conf
+fi
+
 if [ -n "$USERNAME" -a -n "$PASSWORD" ]; then
   echo "$USERNAME" > auth.conf
   echo "$PASSWORD" >> auth.conf

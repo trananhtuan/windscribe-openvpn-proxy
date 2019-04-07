@@ -28,6 +28,8 @@ trananhtuan/windscribe-openvpn-proxy
 
 Substitute the environment variables for `VPNHOST`, `VPNPORT`, `USERNAME`, `PASSWORD`, `LOCAL_NETWORK` as indicated.
 
+`DISABLE_IPV6` - If your system doesn't support IPv6 OpenVPN will fail after connection. Set this to True to filter out the IPv6 ifconfig/route configuration
+
 A `docker-compose-dist.yml` file has also been provided. Copy this file to `docker-compose.yml` and substitute the environment variables are indicated.
 
 Then start the VPN Proxy via:
